@@ -1,7 +1,16 @@
 def generate_insights(df, language="English"):
-    avg_price = df["Price"].str.replace("£","").astype(float).mean()
-    max_price = df["Price"].str.replace("£","").astype(float).max()
-    min_price = df["Price"].str.replace("£","").astype(float).min()
+    if df.empty or "Price" not in df.columns:
+        return "No data available to generate insights." if language=="English" else "لا توجد بيانات لتحليلها."
+    
+    # إزالة الرمز £ وتحويل للأرقام مع تجاهل الأخطاء
+    prices = pd.to_numeric(df["Price"].str.replace("£",""), errors="coerce")
+    
+    if prices.isnull().all():
+        return "No valid price data available." if language=="English" else "لا توجد بيانات سعر صالحة."
+
+    avg_price = prices.mean()
+    max_price = prices.max()
+    min_price = prices.min()
 
     if language == "English":
         return (
