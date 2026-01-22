@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-from scraper import scrape_global_data
+from scraper import df = pd.read_csv("data.csv")
+
 from ai_logic import generate_insights
 
 st.set_page_config(page_title="🤖 Waed AI", layout="wide")
